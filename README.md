@@ -221,5 +221,5 @@ This project is open source and available under the [MIT License](LICENSE).
 ---
 
 <div align="center">
-Made with ❤️ for Machine Learning Education
+Made with Khaled Ayman for Machine Learning Education
 </div>

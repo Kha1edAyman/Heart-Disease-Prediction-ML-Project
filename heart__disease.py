@@ -18,11 +18,32 @@ warnings.filterwarnings('ignore')
 
 # ──────────────────────────────────────────────
 # 1. LOAD DATA (Mohamed mazhar)
+import pandas as pd
+import numpy as np
+
+# 1. column names
+columns = [
+    "age","sex","cp","trestbps","chol","fbs","restecg",
+    "thalach","exang","oldpeak","slope","ca","thal","target"
+]
+
+# 2. load data from UCI
+url = "https://archive.ics.uci.edu/ml/machine-learning-databases/heart-disease/processed.cleveland.data"
+
+df = pd.read_csv(url, names=columns)
+
+# 3. replace ? with NaN
+df.replace("?", np.nan, inplace=True)
+
+# 4. convert to numeric
+df = df.apply(pd.to_numeric)
+
+# 5. show info
+print("Shape:", df.shape)
+print(df.head())
+df.info()
 # ──────────────────────────────────────────────
-
 # UCI Heart Disease Dataset columns
-
-
 # ──────────────────────────────────────────────
 # 2. EDA (yasmin)
 # ──────────────────────────────────────────────

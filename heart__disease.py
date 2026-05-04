@@ -101,6 +101,38 @@ plt.show()
 
 # ──────────────────────────────────────────────
 # 3. PREPROCESSING (fatma )
+df = df.dropna()
+print("Shape after removing missing:", df.shape)
+
+df['target'] = df['target'].apply(lambda x: 1 if x > 0 else 0)
+
+print("\nTarget after conversion:")
+print(df['target'].value_counts())
+
+X = df.drop('target', axis=1)
+y = df['target']
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y,
+    test_size=0.2,
+    stratify=y,
+    random_state=42
+)
+
+print("\nTrain size:", X_train.shape)
+print("Test size:", X_test.shape)
+
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)  # يتعلم من Train
+X_test_scaled = scaler.transform(X_test) 
+
+       # يطبق على Test
+print("====== CHECK ======")
+print("Shape:", df.shape)
+print("Missing:\n", df.isnull().sum())
+print("Target values:", df['target'].unique())
+print("Train shape:", X_train.shape)
+print("Test shape:", X_test.shape)
 # ──────────────────────────────────────────────
 
 # ──────────────────────────────────────────────

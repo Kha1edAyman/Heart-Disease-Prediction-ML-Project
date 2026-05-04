@@ -40,19 +40,15 @@ df = df.apply(pd.to_numeric)
 print("Shape:", df.shape)
 print(df.head())
 df.info()
-<<<<<<< HEAD
 # ──────────────────────────────────────────────
 # UCI Heart Disease Dataset columns
-=======
 
 # mazhar Done ✅
 
->>>>>>> 326968237b2b2e543473094d6e409661882dc32d
 # ──────────────────────────────────────────────
 # 2. EDA (yasmin)
 # ──────────────────────────────────────────────
 
-<<<<<<< HEAD
 import matplotlib.pyplot as plt
 import seaborn as sns
 
@@ -103,8 +99,6 @@ plt.xlabel('Target (0 = Healthy, 1 = Disease)', fontsize=12)
 plt.ylabel('Count', fontsize=12)
 plt.show()
 
-=======
->>>>>>> 326968237b2b2e543473094d6e409661882dc32d
 # ──────────────────────────────────────────────
 # 3. PREPROCESSING (fatma )
 # ──────────────────────────────────────────────

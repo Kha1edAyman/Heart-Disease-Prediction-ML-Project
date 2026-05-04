@@ -40,8 +40,9 @@ df = df.apply(pd.to_numeric)
 print("Shape:", df.shape)
 print(df.head())
 df.info()
-# ──────────────────────────────────────────────
-# UCI Heart Disease Dataset columns
+
+# mazhar Done ✅
+
 # ──────────────────────────────────────────────
 # 2. EDA (yasmin)
 # ──────────────────────────────────────────────

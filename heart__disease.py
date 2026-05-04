@@ -17,28 +17,27 @@ import warnings
 warnings.filterwarnings('ignore')
 
 # ──────────────────────────────────────────────
-# 1. LOAD DATA (Mohamed mazhar)
+# 1. LOAD DATA (Mohamed Mazhar)
+
 import pandas as pd
 import numpy as np
 
-# 1. column names
+# column names
 columns = [
     "age","sex","cp","trestbps","chol","fbs","restecg",
-    "thalach","exang","oldpeak","slope","ca","thal","target"
-]
+    "thalach","exang","oldpeak","slope","ca","thal","target"]
 
-# 2. load data from UCI
+# load data from UCI
 url = "https://archive.ics.uci.edu/ml/machine-learning-databases/heart-disease/processed.cleveland.data"
-
 df = pd.read_csv(url, names=columns)
 
-# 3. replace ? with NaN
+# Handling missing values (?)
 df.replace("?", np.nan, inplace=True)
 
-# 4. convert to numeric
+# convert to numeric
 df = df.apply(pd.to_numeric)
 
-# 5. show info
+# show info
 print("Shape:", df.shape)
 print(df.head())
 df.info()

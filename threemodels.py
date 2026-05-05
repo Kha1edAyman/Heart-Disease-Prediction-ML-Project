@@ -21,10 +21,34 @@ warnings.filterwarnings('ignore')
 # ──────────────────────────────────────────────
 # 1. LOAD DATA
 # ──────────────────────────────────────────────
-df = pd.read_csv("https://raw.githubusercontent.com/Kha1edAyman/Heart-Disease-Prediction-ML-Project/refs/heads/main/data/heart.csv?token=GHSAT0AAAAAADWAXRUHS4UBPGP2HLRUN63O2PZATLA")
-print("Shape:", df.shape)
-print(df.head())
-df.info()
+
+import os
+
+base_dir = os.path.dirname(os.path.abspath(__file__))
+
+local_path = os.path.join(base_dir, "data", "heart.csv")
+
+github_urls = [
+    "https://raw.githubusercontent.com/Kha1edAyman/Heart-Disease-Prediction-ML-Project/main/data/heart.csv",
+    "https://raw.githubusercontent.com/Kha1edAyman/Heart-Disease-Prediction-ML-Project/refs/heads/main/data/heart.csv"
+]
+
+df = None
+
+for url in github_urls:
+    try:
+        df = pd.read_csv(url)
+        print(f"✅ Data loaded from GitHub: {url}")
+        break
+    except:
+        continue
+
+if df is None:
+    try:
+        df = pd.read_csv(local_path)
+        print(f"🏠 Loaded from local path: {local_path}")
+    except Exception as e:
+        print(f"❌ Error: Could not find data anywhere! {e}")
 
 # ──────────────────────────────────────────────
 # 2. EDA
@@ -233,11 +257,64 @@ plt.show()
 print("\nTop 5 Important Features:")
 print(feat_imp.head())
 
+
 # ──────────────────────────────────────────────
-# 7. MODEL COMPARISON
+# 7. MODEL COMPARISON (Nada)
 # ──────────────────────────────────────────────
+print("\n" + "="*60)
+print("FINAL MODEL COMPARISON & EVALUATION")
+print("="*60)
+
+ 
+results_dict = {
+    'Model': ['Logistic Regression', 'SVM', 'Random Forest'],
+    'Accuracy': [lr_acc, svm_acc, rf_acc],
+    'ROC-AUC': [lr_auc, svm_auc, rf_auc],
+    'CV Score': [lr_cv, svm_cv, rf_cv]
+}
+
+results_df = pd.DataFrame(results_dict)
+
+#1. Table
+print("\n📊 Model Comparison Table:")
+print(results_df.to_string(index=False))
+
+# 2. Bar Chart 
+results_melted = results_df.melt(id_vars='Model', var_name='Metric', value_name='Score')
+
+plt.figure(figsize=(12, 6))
+sns.barplot(x='Metric', y='Score', hue='Model', data=results_melted, palette='viridis')
+plt.title('Comparison: Logistic Regression vs SVM vs Random Forest', fontsize=14, fontweight='bold')
+plt.ylim(0.7, 1.0)  
+plt.ylabel('Score Value')
+plt.xlabel('Evaluation Metrics')
+plt.legend(title='Machine Learning Models', bbox_to_anchor=(1.05, 1), loc='upper left')
+plt.grid(axis='y', linestyle='--', alpha=0.7)
+plt.tight_layout()
+plt.show()
+
+# 3.Winner based on ROC-AUC 
+winner = results_df.loc[results_df['ROC-AUC'].idxmax()]
+print("\n" + "⭐"*30)
+print(f"🏆 THE WINNER MODEL IS: {winner['Model']} 🏆")
+print(f"Highest ROC-AUC Score: {winner['ROC-AUC']:.4f}")
+print("⭐"*30)
+
+# 4.Dictionary of results
+final_results_summary = results_dict
 
 
 # ──────────────────────────────────────────────
 # 8. SAVE RESULTS
 # ──────────────────────────────────────────────
+
+
+print("\n" + "="*60)
+print("SAVING RESULTS TO CSV")
+print("="*60)
+
+results_df.to_csv("results.csv", index=False)
+
+print("✅ Results saved successfully as 'results.csv'")
+print("PROJECT EXECUTION COMPLETED!")
+print("="*60)
